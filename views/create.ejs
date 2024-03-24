@@ -2,17 +2,18 @@
 <html lang="en">
 <%- include('./partials/header.ejs') %>
 <%- include('./partials/navbar.ejs') %>
+
 <body class="p-4">
-  
+
   <div class="w-2/5 my-4">
-    <form action="/blogs" method="post" class="flex flex-col bg-slate-300 p-4 w-full rounded-md shadow-md">
+    <form action="/blogs" method="POST" class="flex flex-col bg-slate-300 p-4 w-full rounded-md shadow-md">
       <label for="">Title</label>
-      <input type="text" class="outline-none border border-blue-500 rounded-md p-2 bg-slate-200">
+      <input type="text" name="title" class="outline-none border border-blue-500 rounded-md p-2 bg-slate-200">
       <label for="">Body</label>
-      <input type="text" class="outline-none border border-blue-500 rounded-md px-2 py-10 bg-slate-200">
+      <input type="text" name="body" class="outline-none border border-blue-500 rounded-md px-2 py-10 bg-slate-200">
 
       <label for="">Writers Name</label>
-      <input type="text" class="outline-none border border-blue-500 rounded-md p-2 bg-slate-200">
+      <input type="text" name="name" class="outline-none border border-blue-500 rounded-md p-2 bg-slate-200">
       <button class="bg-crimson text-slate-100 p-2 rounded-md border-none shadow-md my-2">Submit Blog</button>
     </form>
   </div>

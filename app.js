@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const { Blog } = require('./models/blog');
+const { render } = require('ejs');
 const app = express();
 
 const dbURL = 'mongodb+srv://gideongetich493:8aWVPgSf9CUUPJow@myfirstnodeapp.xj7fr4d.mongodb.net/gid-node?retryWrites=true&w=majority&appName=myfirstnodeapp';
@@ -17,9 +18,8 @@ mongoose.connect(dbURL)
 
 app.set('view engine', 'ejs');
 
-
-
 app.use(morgan('dev'));
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
@@ -40,7 +40,15 @@ app.get('/blogs', (req, res) => {
 
 });
 app.post('/blogs', (req, res) => {
-    console.log(req.body);
+    const blog = new Blog(req.body);
+
+    blog.save()
+        .then((rsults) => {
+            res.redirect('/blogs')
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 })
 
 app.get('/about-one', (req, res) => {
@@ -61,14 +69,16 @@ app.get('/about-one', (req, res) => {
 });
 
 
-// app.get('/single-blog', (req, res) => {
-
-//     Blog.findById('65e47d862e0da966f76365b0')
-//         .then((result) => {
-//             res.send(result);
-//         })
-//         .catch((err) => console.log(err));
-// });
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findById(id)
+        .then((result) => {
+            res.render('details', { title: 'Blog Details', blog: result })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+});
 app.get('/create', (req, res) => {
 
     res.render('create', { title: 'Create Blog' });
